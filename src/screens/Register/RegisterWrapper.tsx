@@ -34,10 +34,13 @@ const RegisterWrapper = () => {
 };
 
 const InputWrapper = () => {
-    const navigation = useNavigation();
-    const handleSignIn=():void=>{
-        navigation.navigate('login');
-    }
+  const navigation = useNavigation();
+  const handleSignIn = (): void => {
+    navigation.navigate("login");
+  };
+  const handleApp = (): void => {
+    navigation.navigate("app");
+  };
   return (
     <ScrollWrapper>
       <KeyboardAvoidingView
@@ -78,6 +81,7 @@ const InputWrapper = () => {
           mode="contained"
           style={styles.btnContained}
           labelStyle={styles.label}
+          onPress={handleApp}
         >
           create account
         </Button>

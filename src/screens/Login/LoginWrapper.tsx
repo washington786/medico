@@ -37,6 +37,10 @@ const InputWrapper = () => {
     const handleReset=():void=>{
         navigation.navigate('reset');
     }
+    const handleApp=():void=>{
+        navigation.navigate('app');
+    }
+
   return (
     <ScrollWrapper>
       <KeyboardAvoidingView
@@ -73,6 +77,7 @@ const InputWrapper = () => {
           mode="contained"
           style={styles.btnContained}
           labelStyle={styles.label}
+          onPress={handleApp}
         >
           sign in
         </Button>

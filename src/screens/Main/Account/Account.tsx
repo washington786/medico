@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React,{useEffect,useState} from "react";
 import ScrollWrapper from "../../../Globals/ScrollWrapper";
 import { Button, Paragraph } from "react-native-paper";
 import { colors } from "../../../Globals/Colors";
@@ -8,13 +8,32 @@ import Wrapper, {
   TitleWrapper,
 } from "../../../components/main/settings/Wrapper";
 import { useNavigation } from "@react-navigation/native";
-
+import { db,auth } from "../../../components/Auth/firebase";
+import { ref,onValue } from "firebase/database";
 const Account = () => {
   const navigation = useNavigation();
+  const user =auth.currentUser?.uid
+  const [Firstname,setFirname]=useState('')
+  const [Lastname,setLastname]=useState('')
+  const [email,setEmail]=useState('')
+  const [uid,setUid]=useState('')
+  useEffect(() => {
+    const StudentRef=ref(db,'/MedicoClient/' + user)
+    onValue(StudentRef, snap => {
   
+        setFirname(snap.val() && snap.val().Firstname);
+        setLastname(snap.val() && snap.val().Lastname);
+        setEmail(snap.val().email)
+        setUid(snap.val().uid)
+    }) 
+  
+  }, [])
   const transitAccount = (): void => {
-    navigation.navigate("profile");
-  };
+    navigation.navigate("profile",{
+      Firstname:Firstname,Lastname:Lastname,
+      email:email,uid:uid
+    });
+  }; 
 
   const transitNotifications = (): void => {
     navigation.navigate("notifications");

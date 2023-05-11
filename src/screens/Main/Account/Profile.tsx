@@ -13,7 +13,7 @@ import { colors, rgba } from "../../../Globals/Colors";
 import { roboto } from "../../../Globals/Fonts";
 import Scroller from "../../../Globals/Scroller";
 import { MainStyle } from "../../../styles/MainStyle";
-
+import { useRoute } from "@react-navigation/native";
 const isIos = Platform.OS === "ios";
 
 const Profile = () => {
@@ -28,6 +28,10 @@ const Profile = () => {
   );
 };
 const ProfileWrap = () => {
+  const route =useRoute()
+  const Firstname=route.params.Firstname
+  const Lastname=route.params.Lastname
+  const email=route.params.email
   return (
     <View style={styles.con}>
       <Avatar.Text
@@ -37,36 +41,37 @@ const ProfileWrap = () => {
         labelStyle={styles.label}
         style={styles.avatar}
       />
-      <Paragraph>Daniel Mawasha</Paragraph>
+      <Paragraph>{Firstname} {Lastname}</Paragraph>
       <Text variant="bodySmall" style={styles.email}>
-        dkmawasha@gmail.com
+        {email}
       </Text>
     </View>
   );
 };
 
 const TextInputsWrapper = () => {
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const route = useRoute()
+  const [email, setEmail] = useState(route.params.email);
+  const [firstName, setFirstName] = useState(route.params.Firstname);
+  const [lastName, setLastName] = useState(route.params.Lastname);
   return (
     <View style={styles.inputWrapper}>
       <TextInput
-        placeholder="Email"
+        placeholder={email}
         inputMode="email"
         mode="outlined"
         outlineStyle={styles.outlined}
         style={styles.input}
       />
       <TextInput
-        placeholder="First Name"
+        placeholder={firstName}
         inputMode="text"
         mode="outlined"
         outlineStyle={styles.outlined}
         style={styles.input}
       />
       <TextInput
-        placeholder="Last Name"
+        placeholder={lastName}
         inputMode="text"
         mode="outlined"
         outlineStyle={styles.outlined}

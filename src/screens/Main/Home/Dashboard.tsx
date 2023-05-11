@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React ,{useEffect,useState}from "react";
 import MainView from "../../../Globals/MainView";
 import TopWrapper from "../../../components/main/Home/TopWrapper";
 import MainWrapperView from "../../../components/main/MainWrapperView";
@@ -10,14 +10,30 @@ import { pager_data } from "../../../data/carousel";
 import InformationWrapper from "../../../components/main/Home/InformationWrapper";
 import ReminderWrapper from "../../../components/main/Home/ReminderWrapper";
 import Scroller from "../../../Globals/Scroller";
-
+import { db,auth } from "../../../components/Auth/firebase";
+import { ref,onValue } from "firebase/database";
 const Dashboard = () => {
-  let name: string = "Daniel Mawasha";
+  
+  const user =auth.currentUser?.uid
+  const [Firstname,setFirname]=useState('')
+  const [Lastname,setLastname]=useState('')
+
+  useEffect(() => {
+    const StudentRef=ref(db,'/MedicoClient/' + user)
+    onValue(StudentRef, snap => {
+  
+        setFirname(snap.val() && snap.val().Firstname);
+        setLastname(snap.val() && snap.val().Lastname);
+    }) 
+  
+  }, [])
+  let name: string = 'Daniel';
   return (
     <MainView>
       <MainWrapperView>
         <TopWrapper />
         <NameWrapper name={`${name}`} />
+        
         <SearchWrapper />
         <Scroller>
           <PagerWrapper data={pager_data} />

@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet, View ,Alert,Text} from "react-native";
 import React from "react";
 import { colors } from "../../Globals/Colors";
 import {
@@ -10,7 +10,11 @@ import Top from "../../components/Auth/Top";
 import LoginBottomView from "../../components/Auth/LoginBottomView";
 import ScrollWrapper from "../../Globals/ScrollWrapper";
 import { useNavigation } from "@react-navigation/native";
-
+import { Formik } from "formik";
+import * as yup from 'yup'
+import { auth } from "../../components/Auth/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export let url =
   "https://images.pexels.com/photos/8442280/pexels-photo-8442280.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
 
@@ -40,9 +44,51 @@ const InputWrapper = () => {
     const handleApp=():void=>{
         navigation.navigate('app');
     }
-
+    const ReviewSchem=yup.object({
+      email:yup.string().required().min(6),
+      password:yup.string().required().min(6),
+      
+  })
+  const Submit = async (data) => {
+ 
+    try {
+        const { email, password } = data
+      await 
+            signInWithEmailAndPassword(
+                auth,email.trim().toLowerCase(), password)
+                .then(async res => {
+  
+                try {
+  
+                    const jsonValue = JSON.stringify(res.user)
+                    await AsyncStorage.setItem("MedicoClient", res.user.uid)
+                    navigation.navigate('app');
+                } catch (e) {
+                    // saving error
+                    console.log('no data')
+                }
+            })
+  
+    }
+    catch (error) {
+  
+        Alert.alert(
+            error.name,
+            error.message
+        )
+    }
+  }
   return (
     <ScrollWrapper>
+       <Formik
+                  initialValues={{email:'',password:''}}
+                 validationSchema={ReviewSchem}
+                 onSubmit={(values,action)=>{
+                     action.resetForm()
+                     Submit(values)
+                 }}
+                 >
+                     {(props)=>(
       <KeyboardAvoidingView
         keyboardVerticalOffset={isIos ? 800 : 0}
         behavior={isIos ? "padding" : "height"}
@@ -54,7 +100,11 @@ const InputWrapper = () => {
           keyboardAppearance="light"
           mode="outlined"
           style={styles.input}
+          onChangeText={props.handleChange('email')}
+        value={props.values.email}
+        onBlur={props.handleBlur('email')}
         />
+        <Text style={{color:'red',marginTop:-15}}>{props.touched.email && props.errors.email}</Text>
         <TextInput
           label={"Password"}
           keyboardType="default"
@@ -62,8 +112,11 @@ const InputWrapper = () => {
           secureTextEntry
           mode="outlined"
           style={styles.input}
+          onChangeText={props.handleChange('password')}
+          value={props.values.password}
+          onBlur={props.handleBlur('password')}
         />
-
+        <Text style={{color:'red',marginTop:-15}}>{props.touched.password && props.errors.password}</Text>
         <Button
           mode="text"
           style={styles.btn}
@@ -93,6 +146,8 @@ const InputWrapper = () => {
 
         {isIos && <Views />}
       </KeyboardAvoidingView>
+      )}
+      </Formik>
     </ScrollWrapper>
   );
 };

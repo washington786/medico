@@ -23,8 +23,8 @@ const Account = () => {
   
         setFirname(snap.val() && snap.val().Firstname);
         setLastname(snap.val() && snap.val().Lastname);
-        setEmail(snap.val().email)
-        setUid(snap.val().uid)
+        setEmail(snap.val() && snap.val().email)
+        setUid(snap.val() && snap.val().uid)
     }) 
   
   }, [])

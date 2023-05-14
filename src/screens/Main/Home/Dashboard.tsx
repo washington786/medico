@@ -15,8 +15,8 @@ import { ref,onValue } from "firebase/database";
 const Dashboard = () => {
   
   const user =auth.currentUser?.uid
-  const [Firstname,setFirname]=useState('')
-  const [Lastname,setLastname]=useState('')
+  const [Firstname,setFirname]=useState<string>('')
+  const [Lastname,setLastname]=useState<string>('')
 
   useEffect(() => {
     const StudentRef=ref(db,'/MedicoClient/' + user)
@@ -27,7 +27,7 @@ const Dashboard = () => {
     }) 
   
   }, [])
-  let name: string = 'Daniel';
+  let name: string = Firstname +" "+ Lastname;
   return (
     <MainView>
       <MainWrapperView>

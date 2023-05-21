@@ -12,7 +12,6 @@ const Info = () => {
     var found = instructions.find((info) => {
       return info.id === id;
     });
-    console.log(found);
     if (found) {
       setIsActive(!isActive);
     } else {

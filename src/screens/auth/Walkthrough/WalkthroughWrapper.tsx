@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 import Icons from "react-native-vector-icons/AntDesign";
-import { colors, rgba } from "../../Globals/Colors";
+import { colors, rgba } from "../../../Globals/Colors";
 import { Title, Text as Texts, Button } from "react-native-paper";
 import { color } from "@rneui/base";
 import { useNavigation } from "@react-navigation/native";
@@ -34,7 +34,7 @@ const Middle = () => {
   return (
     <View style={[styles.container, styles.mid]}>
       <Image
-        source={require("../../assets/undraw_doctor_kw5l.png")}
+        source={require("../../../assets/undraw_doctor_kw5l.png")}
         style={styles.img}
       />
       <Title style={styles.main_title}>{title}</Title>

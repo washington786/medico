@@ -1,9 +1,11 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import Walkthrough from '../../screens/Walkthrough/Walkthrough';
-import ResetPassword from '../../screens/ResetPassword/ResetPassword';
-import Register from '../../screens/Register/Register';
-import Login from '../../screens/Login/Login';
+import Walkthrough from '../../screens/auth/Walkthrough/Walkthrough';
+import ResetPassword from '../../screens/auth/ResetPassword/ResetPassword';
+import Register from '../../screens/auth/Register/Register';
+import Login from '../../screens/auth/Login/Login';
+import StudentDetails from '../../screens/auth/studentDetails/StudentDetails';
+import GuardianDetails from '../../screens/auth/Guardian/GuardianDetails';
 
 const AuthStack = createStackNavigator();
 
@@ -17,6 +19,8 @@ const Auth = () => {
         <AuthStack.Screen name='login' component={Login}/>
         <AuthStack.Screen name='register' component={Register}/>
         <AuthStack.Screen name='reset' component={ResetPassword}/>
+        <AuthStack.Screen name='studentDetails' component={StudentDetails}/>
+        <AuthStack.Screen name='guardian' component={GuardianDetails}/>
     </AuthStack.Navigator>
     </>
   )

@@ -7,6 +7,7 @@ import Hospitals from '../../../screens/Main/Home/Hospitals';
 import Consult from '../../../screens/Main/Home/Consult';
 import Ambulance from '../../../screens/Main/Home/Ambulance';
 import ReminderDetails from '../../../screens/Main/Home/ReminderDetails';
+import HospitalDetails from '../../../screens/Main/Home/HospitalDetails';
 const HomeStacks = createStackNavigator();
 const HomeStack = () => {
   return (
@@ -16,6 +17,7 @@ const HomeStack = () => {
         <HomeStacks.Screen name='dashboard' component={Dashboard}/>
         <HomeStacks.Screen name='search' component={Search}/>
         <HomeStacks.Screen name='hospitals' component={Hospitals}/>
+        <HomeStacks.Screen name='hospitalInfo' component={HospitalDetails}/>
         <HomeStacks.Screen name='consult' component={Consult}/>
         <HomeStacks.Screen name='ambulance' component={Ambulance}/>
         <HomeStacks.Screen name='details' component={ReminderDetails}/>

@@ -1,5 +1,5 @@
 import React from "react";
-import MainView from "../../Globals/MainView";
+import MainView from "../../../Globals/MainView";
 import LoginWrapper from "./LoginWrapper";
 
 const Login = () => {

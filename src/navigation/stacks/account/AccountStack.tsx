@@ -6,6 +6,7 @@ import HelpCenter from '../../../screens/Main/Account/HelpCenter';
 import Notifications from '../../../screens/Main/Account/Notifications';
 import Profile from '../../../screens/Main/Account/Profile';
 import PrivacyPolicy from '../../../screens/Main/Account/PrivacyPolicy';
+import Reminder from '../../../screens/Main/Account/Reminder';
 const AccountStacks = createStackNavigator();
 const AccountStack = () => {
   return (
@@ -13,6 +14,7 @@ const AccountStack = () => {
         headerShown:false
     }} initialRouteName='account'>
         <AccountStacks.Screen name='account' component={Account}/>
+        <AccountStacks.Screen name='reminder' component={Reminder}/>
         <AccountStacks.Screen name='profile' component={Profile}/>
         <AccountStacks.Screen name='notifications' component={Notifications}/>
         <AccountStacks.Screen name='help' component={HelpCenter}/>

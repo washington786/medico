@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
     con:{
         paddingHorizontal:10,
         flexGrow:1,
+        backgroundColor:"white"
     }
 })

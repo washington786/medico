@@ -5,13 +5,13 @@ import {
   StyleSheet,
 } from "react-native";
 import React from "react";
-import BackgroundWrapper from "../../components/Auth/BackgroundWrapper";
+import BackgroundWrapper from "../../../components/Auth/BackgroundWrapper";
 import { url } from "../Login/LoginWrapper";
-import LoginBottomView from "../../components/Auth/LoginBottomView";
-import Top from "../../components/Auth/Top";
-import ScrollWrapper from "../../Globals/ScrollWrapper";
+import LoginBottomView from "../../../components/Auth/LoginBottomView";
+import Top from "../../../components/Auth/Top";
+import ScrollWrapper from "../../../Globals/ScrollWrapper";
 import { Button, TextInput } from "react-native-paper";
-import { colors } from "../../Globals/Colors";
+import { colors } from "../../../Globals/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 const isIos = Platform.OS === "ios";

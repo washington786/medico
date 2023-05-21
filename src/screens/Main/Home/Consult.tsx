@@ -14,11 +14,11 @@ const Consult = () => {
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: 'Hi, please feel free to chat with us regarding your health.',
         createdAt: new Date(),
         user: {
           _id: 2,
-          name: 'React Native',
+          name: 'Private Consulter',
         },
         sent:true,
         received:true

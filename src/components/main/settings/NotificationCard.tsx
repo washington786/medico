@@ -42,12 +42,12 @@ const NotificationCard = (props: card) => {
         </Text>
       </Row>
       <Divider orientation="horizontal" />
-      <Row style={styles.row}>
+      {/* <Row style={styles.row}>
         <Text variant="titleSmall">Description</Text>
         <Paragraph numberOfLines={2} ellipsizeMode="tail" style={styles.desc}>
           {props.description}
         </Paragraph>
-      </Row>
+      </Row> */}
       <Row style={styles.row}>
         <Text variant="titleSmall">Address</Text>
         <Paragraph numberOfLines={1} ellipsizeMode="tail" style={styles.desc}>

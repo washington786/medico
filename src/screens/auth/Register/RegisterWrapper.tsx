@@ -74,9 +74,10 @@ const InputWrapper = () => {
           uid: res.user.uid,
         });
 
-        navigation.navigate("studentDetails");
+        // navigation.navigate("studentDetails");
+        navigation.navigate("app");
         setLoading(false);
-      });
+      }); 
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         Alert.alert("That email address is already inuse");

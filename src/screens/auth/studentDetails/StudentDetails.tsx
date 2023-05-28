@@ -11,6 +11,10 @@ import CustomeTop from "../../../components/Auth/CustomeTop";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
 import axios from "axios";
+import { db,auth } from "../../../components/Auth/firebase";
+import { update } from "firebase/database";
+import { ref } from "firebase/database";
+import { child } from "firebase/database";
 
 // selector
 import { SelectList } from "react-native-dropdown-select-list";
@@ -25,6 +29,7 @@ const StudentDetails = () => {
   const [barcodeData, setBarcodeData] = useState<string | any>(null);
 
   const [address, setAddress] = useState<any>(null);
+  const user =auth.currentUser?.uid
 
   //   permission
   useEffect(() => {
@@ -121,7 +126,21 @@ const StudentDetails = () => {
   const transitToGuardian = (): void => {
     navigation.navigate("guardian");
   };
-
+  const [phonenumber,setphonenumber]=useState('')
+  const editprofile=()=>{
+  
+    const medicoRef=ref(db, "/MedicoClient/" )
+    const medicoChild = child(medicoRef,user)
+update(medicoChild,{finalStudentNo:finalStudentNo,fullAddress:fullAddress,
+  phonenumber,})
+    // .then(()=>medicoRef.once('value'))
+    // .then(snapshot=>snapshot.val())
+    // .catch(error => ({
+    //   errorCode: error.code,
+    //   errorMessage: error.message
+    // })); 
+    // navigation.navigate('Profile')
+  }
   return (
     <View style={styles.view}>
       <ScrollWrapper>
@@ -156,15 +175,17 @@ const StudentDetails = () => {
                 keyboardAppearance="light"
                 mode="outlined"
                 style={styles.input}
+                onChangeText={(text)=>setphonenumber(text)}
+                value={phonenumber}
               />
 
-              <TextInput
+              {/* <TextInput
                 label={"Whatsapp Number"}
                 keyboardType="phone-pad"
                 keyboardAppearance="light"
                 mode="outlined"
                 style={styles.input}
-              />
+              /> */}
 
               <TextInput
                 label={"Address of your staying"}
@@ -176,12 +197,12 @@ const StudentDetails = () => {
                 numberOfLines={4}
                 multiline={true}
               />
-              <InformationWrapper />
+              {/* <InformationWrapper /> */}
               <Button
                 mode="contained"
                 style={styles.btnContained}
                 labelStyle={styles.label}
-                onPress={transitToGuardian}
+                // onPress={()=>editprofile()}
               >
                 continue
               </Button>

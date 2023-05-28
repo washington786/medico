@@ -14,7 +14,8 @@ import { colors } from "../../../Globals/Colors";
 import { MultipleSelectList } from "react-native-dropdown-select-list";
 
 import { SelectList } from "react-native-dropdown-select-list";
-
+import { db,auth } from "../../../components/Auth/firebase";
+import { ref,push } from "firebase/database";
 const isIos = Platform.OS === "ios";
 
 const height = Dimensions.get("screen").height;
@@ -33,7 +34,7 @@ const Reminder = () => {
 const InputWrapper = () => {
   const [selected, setSelected] = useState([]);
 
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedTime, setSelectedTime] = useState([]);
 
   const data = [
     { key: "1", value: "Liquid", disabled: true },
@@ -62,7 +63,19 @@ const InputWrapper = () => {
   const onHandleSelectedType = (event: any): void => {
     setSelected(event);
   };
+  const [title,setTitle]=useState('')
+  const [description,setDescription]=useState('')
+  const CurrentID = auth.currentUser?.uid;
+  const onHandleAdd=()=>{
+    const AddRef =ref(db,'MedicoReminder')
+    push(AddRef,{
+        
+      selectedTime,selected,
+      CurrentID,title,description,
 
+    })
+    
+  }
   return (
     <ScrollWrapper>
       <KeyboardAvoidingView
@@ -75,6 +88,8 @@ const InputWrapper = () => {
           keyboardAppearance="light"
           mode="outlined"
           style={styles.input}
+          value={title}
+          onChangeText={(text)=>setTitle(text)}
         />
         <TextInput
           label={"description"}
@@ -84,6 +99,8 @@ const InputWrapper = () => {
           multiline={true}
           numberOfLines={4}
           style={[styles.input, styles.multi]}
+          value={description}
+          onChangeText={(text)=>setDescription(text)}
         />
 
         <MultipleSelectList
@@ -98,7 +115,7 @@ const InputWrapper = () => {
         />
 
         <SelectList
-          setSelected={(val:any) => setSelected(val)}
+          setSelected={(val:any) => setSelectedTime(val)}
           data={time}
           save="value"
           search={false}
@@ -111,6 +128,7 @@ const InputWrapper = () => {
           mode="contained"
           style={styles.btnContained}
           labelStyle={styles.label}
+          onPress={onHandleAdd}
         >
           create reminder
         </Button>

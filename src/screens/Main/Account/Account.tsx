@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View ,Text} from "react-native";
 import React, { useEffect, useState } from "react";
 import ScrollWrapper from "../../../Globals/ScrollWrapper";
 import { Button, Paragraph } from "react-native-paper";
@@ -10,16 +10,17 @@ import Wrapper, {
 import { useNavigation } from "@react-navigation/native";
 import { db, auth } from "../../../components/Auth/firebase";
 import { ref, onValue } from "firebase/database";
+import { signOut } from "firebase/auth";
 const Account = () => {
   const navigation = useNavigation();
-  const user = auth.currentUser?.uid;
+  const user = auth.currentUser?.uid
   const [Firstname, setFirname] = useState("");
   const [Lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [uid, setUid] = useState("");
   useEffect(() => {
     const StudentRef = ref(db, "/MedicoClient/" + user);
-    onValue(StudentRef, (snap) => {
+    onValue(StudentRef, snap => {
       setFirname(snap.val() && snap.val().Firstname);
       setLastname(snap.val() && snap.val().Lastname);
       setEmail(snap.val() && snap.val().email);
@@ -34,7 +35,12 @@ const Account = () => {
       uid: uid,
     });
   };
-
+  const onLogoutUser=()=>{
+   
+    signOut(auth);
+    navigation.navigate('login');
+    
+  }
   const transitNotifications = (): void => {
     navigation.navigate("notifications");
   };
@@ -60,7 +66,7 @@ const Account = () => {
       <ScrollWrapper>
         <ContainerWrapper>
           <TitleWrapper title={"account"} />
-
+<Text></Text>
           <Row>
             <Wrapper
               title="my account"
@@ -71,6 +77,7 @@ const Account = () => {
               mode="contained"
               contentStyle={styles.btnContent}
               style={styles.btn}
+              onPress={onLogoutUser}
             >
               Log out
             </Button>

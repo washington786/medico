@@ -16,7 +16,7 @@ const LoginBottomView = (props:l) => {
     </View>
   )
 }
-
+ 
 export default React.memo(LoginBottomView)
 
 const styles = StyleSheet.create({

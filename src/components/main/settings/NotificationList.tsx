@@ -1,20 +1,59 @@
 import { FlatList, Image, StyleSheet, View } from "react-native";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { notifications } from "../../../data/Notifications";
 import NotificationCard from "./NotificationCard";
 import { Text } from "react-native-paper";
 import { colors } from "../../../Globals/Colors";
-
+import {auth,db} from '../../Auth/firebase'
+import {ref,onValue} from 'firebase/database'
 type list = {
   onPress(): void;
 };
 
 const NotificationList = (props: list) => {
+  const CurrentID = auth.currentUser?.uid;
+  const [StudHistory, setStudHistory] = useState([])
+  
+  useEffect(() => {
+   const StudentRef= ref(db,'/MedicoRequest')
+   onValue(StudentRef, snap => {
+
+        const StudHistory = []
+        snap.forEach(action => {
+            const key = action.key
+            const data = action.val()
+            StudHistory.push({
+                key:key,
+                Firstname:data.Firstname,address:data.fullAddress,
+                uid:data.uid,status:data.Status,
+                accessibility:data.accessibility,
+                safety:data.safety,additional:data.addons,
+              user:data.user
+            })
+            
+            const text=CurrentID
+            if(text){
+             const newData = StudHistory.filter(function(item){
+                 const itemData = item.user ? item.user
+                 :'';
+                 const textData = text;
+                 return itemData.indexOf( textData)>-1;
+ 
+             })
+             setStudHistory(newData)
+            
+           }
+
+
+        })
+    })
+ 
+}, [])
   return (
     <View style={styles.con}>
       <FlatList
-        data={notifications}
-        keyExtractor={(item) => item.id.toString()}
+        data={StudHistory}
+        keyExtractor={(item) => item.key.toString()}
         renderItem={(item) => {
           const {
             accessibility,

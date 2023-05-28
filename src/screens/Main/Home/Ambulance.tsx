@@ -20,7 +20,8 @@ import Constants from "expo-constants";
 import axios from "axios";
 import { Divider } from "react-native-elements";
 import Scroller from "../../../Globals/Scroller";
-
+import { db,auth } from "../../../components/Auth/firebase";
+import { ref,onValue ,push} from "firebase/database";
 const isIos = Platform.OS === "ios";
 
 const Ambulance = () => {
@@ -111,13 +112,38 @@ const InputsWrapper = () => {
   const showDialog = () => setVisible(true);
 
   const hideDialog = () => setVisible(false);
+  const [description,setDescription]=useState('')
+  const user = auth.currentUser?.uid
+  const [Firstname, setFirname] = useState("");
+  const [Lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [uid, setUid] = useState("");
+  useEffect(() => {
+    const StudentRef = ref(db, "/MedicoClient/" + user);
+    onValue(StudentRef, snap => {
+      setFirname(snap.val() && snap.val().Firstname);
+      setLastname(snap.val() && snap.val().Lastname);
+      setEmail(snap.val() && snap.val().email);
+      setUid(snap.val() && snap.val().uid);
+    });
+  }, []);
+  const onHandleAdd=()=>{
+    const AddRef =ref(db,'MedicoRequest')
+    push(AddRef,{
+        
+      Firstname,
+      uid,fullAddress,Status:'Pending',
+      user,accessibility,safety,addons
+    })
+    showDialog()
+  }
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={isIos ? 800 : 0}
       behavior={isIos ? "padding" : "height"}
       enabled={true}
     >
-      <TextInput
+      {/* <TextInput
         label={"Brief description of the emergency"}
         keyboardType="default"
         keyboardAppearance="light"
@@ -125,7 +151,9 @@ const InputsWrapper = () => {
         style={[styles.input, styles.multi]}
         numberOfLines={3}
         multiline={true}
-      />
+        value={description}
+        onChangeText={(text)=>setDescription(text)}
+      /> */}
       <TextInput
         label={"Address of your staying"}
         keyboardType="default"
@@ -218,7 +246,7 @@ const InputsWrapper = () => {
         mode="contained"
         style={styles.btnContained}
         labelStyle={styles.label}
-        onPress={showDialog}
+        onPress={onHandleAdd}
       >
         send request
       </Button>

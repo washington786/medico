@@ -55,30 +55,34 @@ const InputWrapper = () => {
   });
 
   const Submit = async (data) => {
+ 
     try {
-      const { email, password } = data;
-      await signInWithEmailAndPassword(
-        auth,
-        email.trim().toLowerCase(),
-        password
-      ).then(async (res) => {
-        try {
-          setLoading(true);
-          const jsonValue = JSON.stringify(res.user);
-          await AsyncStorage.setItem("MedicoClient", res.user.uid);
-          navigation.navigate("app");
-          setLoading(false);
-        } catch (e) {
-          // saving error
-          console.log("no data");
-          setLoading(false);
-        }
-      });
-    } catch (error) {
-      Alert.alert(error.name, error.message);
-      setLoading(false);
+        const { email, password } = data
+      await 
+            signInWithEmailAndPassword(
+                auth,email.trim().toLowerCase(), password)
+                .then(async res => {
+  
+                try {
+  
+                    const jsonValue = JSON.stringify(res.user)
+                    await AsyncStorage.setItem("MedicoClient", res.user.uid)
+                    navigation.navigate("app");
+                } catch (e) {
+                    // saving error
+                    console.log('no data')
+                }
+            })
+  
     }
-  };
+    catch (error) {
+  
+        Alert.alert(
+            error.name,
+            error.message
+        )
+    }
+  }
   return (
     <ScrollWrapper>
       <Formik
@@ -135,7 +139,7 @@ const InputWrapper = () => {
               mode="contained"
               style={styles.btnContained}
               labelStyle={styles.label}
-              onPress={handleApp}
+              onPress={props.handleSubmit}
               loading={load}
             >
               sign in

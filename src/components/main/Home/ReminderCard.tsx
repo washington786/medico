@@ -14,7 +14,7 @@ type reminder={
     subtitle:string;
     icon:string;
     onPress?():void;
-}
+} 
 
 const ReminderCard = (props:reminder) => {
   return (

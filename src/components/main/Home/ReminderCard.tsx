@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View ,FlatList} from "react-native";
 import React from "react";
 import { colors, rgba } from "../../../Globals/Colors";
 import { Caption, Card, Paragraph, Text, Title } from "react-native-paper";
@@ -13,6 +13,7 @@ type reminder={
     title:string;
     subtitle:string;
     icon:string;
+    selected:string;
     onPress?():void;
 } 
 
@@ -29,6 +30,13 @@ const ReminderCard = (props:reminder) => {
         <View style={styles.icon}>
             <Icon name="chevron-right" size={25} color={rgba.grey_3}/>
         </View>
+        <FlatList numColumns={2} data={props.selected} renderItem={({item,i})=>(
+        <View style={{alignItems:'center',justifyContent:'center',margin:10,flexDirection:'row',
+       marginLeft:'auto',marginRight:'auto' }}>
+            {/* <Text>{item.}</Text> */}
+           
+        </View>
+    )}/>
    </TouchableOpacity>
   );
 };

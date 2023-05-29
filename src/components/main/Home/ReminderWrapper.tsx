@@ -13,7 +13,7 @@ const ReminderWrapper = () => {
   const [StudHistory, setStudHistory] = useState([])
   
   useEffect(() => {
-   const StudentRef= ref(db,'/MedicoRequest')
+   const StudentRef= ref(db,'/MedicoReminder')
    onValue(StudentRef, snap => {
 
         const StudHistory = []
@@ -64,8 +64,10 @@ const ReminderWrapper = () => {
          
         } = item.item;
         return (
-          <Text>{title}</Text>
-          // <ReminderCard icon="pills" subtitle="please make sure to take your medications 3 times a day." title="Medication in-take Reminder" onPress={handleTransits}/>
+          
+          <ReminderCard icon="pills" subtitle={description} title={" Reminder Time:" + selectedTime} 
+          selected={selected}
+          onPress={handleTransits}/>
         );
       }}
       style={{ flexGrow: 1 }}
@@ -75,7 +77,7 @@ const ReminderWrapper = () => {
     />
   
     
-      <ReminderCard icon="pills" subtitle="please make sure to take your medications 3 times a day." title="Medication in-take Reminder" onPress={handleTransits}/>
+      {/* <ReminderCard icon="pills" subtitle="please make sure to take your medications 3 times a day." title="Medication in-take Reminder" onPress={handleTransits}/> */}
     </>
   );
 };

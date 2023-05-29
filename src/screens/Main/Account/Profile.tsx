@@ -14,6 +14,8 @@ import { roboto } from "../../../Globals/Fonts";
 import Scroller from "../../../Globals/Scroller";
 import { MainStyle } from "../../../styles/MainStyle";
 import { useRoute } from "@react-navigation/native";
+import { db,auth } from "../../../components/Auth/firebase";
+import { ref,onValue,child ,update} from "firebase/database";
 const isIos = Platform.OS === "ios";
 
 const Profile = () => {
@@ -51,9 +53,26 @@ const ProfileWrap = () => {
 
 const TextInputsWrapper = () => {
   const route = useRoute()
+  const user = auth.currentUser?.uid
   const [email, setEmail] = useState(route.params.email);
   const [firstName, setFirstName] = useState(route.params.Firstname);
   const [lastName, setLastName] = useState(route.params.Lastname);
+  const [uid, setUid] = useState(route.params.uid);
+  const editprofile=()=>{
+  
+    const medicoRef=ref(db, "/MedicoClient/" )
+    const medicoChild = child(medicoRef,uid)
+update(medicoChild,{Lastname:lastName,Firstname:firstName,
+  })
+    // .then(()=>medicoRef.once('value'))
+    // onValue(medicoChild)
+    // .then(snapshot=>snapshot.val())
+    // .catch(error => ({
+    //   errorCode: error.code,
+    //   errorMessage: error.message
+    // })); 
+    // navigation.navigate('Profile')
+  }
   return (
     <View style={styles.inputWrapper}>
       <TextInput
@@ -69,6 +88,8 @@ const TextInputsWrapper = () => {
         mode="outlined"
         outlineStyle={styles.outlined}
         style={styles.input}
+        value={firstName}
+        onChangeText={(text)=>setFirstName(text)}
       />
       <TextInput
         placeholder={lastName}
@@ -76,6 +97,8 @@ const TextInputsWrapper = () => {
         mode="outlined"
         outlineStyle={styles.outlined}
         style={styles.input}
+        value={lastName}
+        onChangeText={(text)=>setLastName(text)}
       />
 
       <Button
@@ -83,6 +106,7 @@ const TextInputsWrapper = () => {
         contentStyle={MainStyle.buttonGlobal}
         labelStyle={MainStyle.label}
         style={MainStyle.btn}
+        onPress={()=>editprofile()}
       >
         update profile
       </Button>

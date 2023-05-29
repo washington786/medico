@@ -5,7 +5,8 @@ import NotificationCard from "./NotificationCard";
 import { Text } from "react-native-paper";
 import { colors } from "../../../Globals/Colors";
 import {auth,db} from '../../Auth/firebase'
-import {ref,onValue} from 'firebase/database'
+import {ref,onValue,get} from 'firebase/database'
+
 type list = {
   onPress(): void;
 };
@@ -20,6 +21,7 @@ const NotificationList = (props: list) => {
 
         const StudHistory = []
         snap.forEach(action => {
+           
             const key = action.key
             const data = action.val()
             StudHistory.push({
@@ -63,7 +65,7 @@ const NotificationList = (props: list) => {
             description,
             safety,
             status,
-            time,
+            time,key
           } = item.item;
           return (
             <NotificationCard
@@ -75,6 +77,7 @@ const NotificationList = (props: list) => {
               safety={safety}
               status={status}
               time={time}
+              key={key}
               onPress={props.onPress}
             />
           );

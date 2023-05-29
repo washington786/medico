@@ -15,6 +15,7 @@ type card = {
   time: string;
   date: string;
   additional: string;
+  key:string;
   onPress(event?: any): void;
 };
 const NotificationCard = (props: card) => {

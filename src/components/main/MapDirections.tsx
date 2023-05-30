@@ -4,7 +4,6 @@ import React from "react";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
 
-
 type map = {
   lat: number;
   long: number;
@@ -34,6 +33,7 @@ const MapDirections = (props: map) => {
             longitude: props.long,
           }}
         />
+       
         <Polyline coordinates={coords} strokeColor="#f00" strokeWidth={2} />
       </MapView>
     </View>

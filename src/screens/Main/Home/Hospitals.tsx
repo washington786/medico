@@ -8,7 +8,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Searchbar, Text } from "react-native-paper";
 import { colors } from "../../../Globals/Colors";
 import { DUMMY_DATA } from "../../../data/Data";
-
+import MapViewDirections from 'react-native-maps-directions';
+const destination = {latitude: -23.90035, longitude: 29.45101};
+// latitude: -23.90035,
+//             longitude: 29.45101,
+const GOOGLE_MAPS_APIKEY = 'AIzaSyAlHienlg1pz2Y4Xg0y9b12wU_Km-4yvOA';
 const isAndroid = Platform.OS === "android";
 const Hospitals = () => {
   const navigation = useNavigation();
@@ -55,6 +59,14 @@ const Hospitals = () => {
           longitudeDelta: 0.029,
         }}
       >
+          <MapViewDirections
+                    origin={{latitude:latitude,
+                      longitude: longitude}}
+                    destination={destination}
+                    apikey={GOOGLE_MAPS_APIKEY}
+                    strokeWidth={4}
+                    strokeColor='#000'
+                  />
         {DUMMY_DATA.map((place) => {
           return (
             <View key={place.id}>

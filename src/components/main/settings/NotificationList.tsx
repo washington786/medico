@@ -25,9 +25,9 @@ const NotificationList = (props: list) => {
             const key = action.key
             const data = action.val()
             StudHistory.push({
-                key:key,
+                NotK:key,
                 Firstname:data.Firstname,address:data.fullAddress,
-                uid:data.uid,status:data.Status,
+                uid:data.uid,status:data.status,
                 accessibility:data.accessibility,
                 safety:data.safety,additional:data.addons,
               user:data.user
@@ -55,7 +55,7 @@ const NotificationList = (props: list) => {
     <View style={styles.con}>
       <FlatList
         data={StudHistory}
-        keyExtractor={(item) => item.key.toString()}
+        // keyExtractor={(item) => item.key.toString()}
         renderItem={(item) => {
           const {
             accessibility,
@@ -65,7 +65,7 @@ const NotificationList = (props: list) => {
             description,
             safety,
             status,
-            time,key
+            time,NotK
           } = item.item;
           return (
             <NotificationCard
@@ -77,7 +77,7 @@ const NotificationList = (props: list) => {
               safety={safety}
               status={status}
               time={time}
-              key={key}
+              NotK={NotK}
               onPress={props.onPress}
             />
           );

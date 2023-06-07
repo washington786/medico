@@ -5,7 +5,8 @@ import { Row } from "../../../screens/Main/Home/Ambulance";
 import { Button, Caption, Paragraph, Text } from "react-native-paper";
 import { roboto } from "../../../Globals/Fonts";
 import { Divider } from "react-native-elements";
-
+ import {db,auth} from "../../Auth/firebase"
+ import {ref,child,update} from "firebase/database"
 type card = {
   address: string;
   status: string;
@@ -15,7 +16,7 @@ type card = {
   time: string;
   date: string;
   additional: string;
-  key:string;
+  NotK:string;
   onPress(event?: any): void;
 };
 const NotificationCard = (props: card) => {
@@ -35,6 +36,14 @@ const NotificationCard = (props: card) => {
   props.date = date_of_request;
   props.time = time;
 
+  const updateAvailability = (NotK) => { 
+    const MedicRef=ref(db,'MedicoRequest')
+    const MedicoChild=child(MedicRef,NotK)
+    update(MedicoChild,{status:'Cancelled'})
+      
+ 
+ 
+ }
   return (
     <View style={styles.con}>
       <Row>
@@ -75,7 +84,7 @@ const NotificationCard = (props: card) => {
         mode="outlined"
         style={styles.btnOutline}
         labelStyle={styles.label}
-        onPress={props.onPress}
+        onPress={()=>updateAvailability(props.NotK)}
       >
         cancel
       </Button>
